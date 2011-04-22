@@ -196,6 +196,10 @@ header {
 			margin: 0 10px 0 0;
 		}
 		
+			#main p label.in_error {
+				color: red;
+			}
+		
 		#main p input[type=text] {
 			font-size: 1.2em;
 			padding: 3px 5px;

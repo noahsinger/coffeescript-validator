@@ -4,6 +4,7 @@
       $("form input[type=text]").each(function() {
         if ($(this).attr("value") === "") {
           $(this).addClass("in_error");
+          $("label[for=" + $(this).attr("id") + "]").addClass("in_error");
           return $(this).focus(function() {
             return $(this).removeClass("in_error");
           });
