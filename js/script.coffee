@@ -6,4 +6,5 @@ $(document).ready ->
 				$("label[for=" + $(this).attr( "id" ) + "]").addClass "in_error"
 				$(this).focus ->
 					$(this).removeClass "in_error"
+					$("label[for=" + $(this).attr( "id" ) + "]").removeClass "in_error"
 		false
