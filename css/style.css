@@ -188,6 +188,13 @@ header {
 	padding: 20px;
 }
 
+	#main #form_errors {
+		background-color: #fee;
+		border: 1px solid #f00;
+		padding: 10px 10px;
+		width: 500px;
+	}
+
 	#main p {
 		margin: 20px 0;
 	}
