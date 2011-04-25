@@ -20,7 +20,7 @@
     $("form *[data-validate]").each(function() {
       return $(this).bind('validate', function(event, errors) {
         var status;
-        status = $.data(document, $(this).data("validate"))($(this), errors);
+        status = $.data(document, $(this).data("validate"))($(this));
         if (!status.valid) {
           $(this).addClass("in_error");
           $("label[for=" + $(this).attr("id") + "]").addClass("in_error");
