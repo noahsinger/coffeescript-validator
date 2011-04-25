@@ -12,10 +12,12 @@ clear_errors = ->
 	if $("#form_errors").size( ) > 0
 		$("#form_errors ul").empty( )
 
-$(document).ready ->			
-	$("form").submit ->
-		errors = []
-		$("form input[type=text]").each ->
+# ----------------------------------
+
+$(document).ready ->
+	$("form input[type=text]").each ->
+		$(this).bind 'validate', (event, errors) ->
+			# alert "validating #{$(this).attr( "id" )} and errors: #{errors.length}"
 			if $(this).attr( "value" ) is ""
 				$(this).addClass "in_error"
 				$("label[for=" + $(this).attr( "id" ) + "]").addClass "in_error"
@@ -23,6 +25,11 @@ $(document).ready ->
 				$(this).focus ->
 					$(this).removeClass "in_error"
 					$("label[for=" + $(this).attr( "id" ) + "]").removeClass "in_error"
+
+	$("form").submit ->
+		errors = []
+		$("form input[type=text]").each ->
+			$(this).trigger 'validate', [errors]
 		if errors.length > 0
 			remove_errors_div( )
 			create_errors_div( )

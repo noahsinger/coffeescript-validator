@@ -17,10 +17,8 @@
     }
   };
   $(document).ready(function() {
-    return $("form").submit(function() {
-      var errors, message, _i, _len;
-      errors = [];
-      $("form input[type=text]").each(function() {
+    $("form input[type=text]").each(function() {
+      return $(this).bind('validate', function(event, errors) {
         if ($(this).attr("value") === "") {
           $(this).addClass("in_error");
           $("label[for=" + $(this).attr("id") + "]").addClass("in_error");
@@ -30,6 +28,13 @@
             return $("label[for=" + $(this).attr("id") + "]").removeClass("in_error");
           });
         }
+      });
+    });
+    return $("form").submit(function() {
+      var errors, message, _i, _len;
+      errors = [];
+      $("form input[type=text]").each(function() {
+        return $(this).trigger('validate', [errors]);
       });
       if (errors.length > 0) {
         remove_errors_div();
