@@ -13,9 +13,9 @@ clear_errors = ->
 		$("#form_errors ul").empty( )
 
 $(document).ready ->
-	$("form input[type=text]").each ->
+	$("form *[data-validate]").each ->
 		$(this).bind 'validate', (event, errors) ->
-			status = $.data( document, 'text_field_not_blank' )($(this), errors)
+			status = $.data( document, $(this).data("validate") )($(this), errors)
 			unless status.valid
 				$(this).addClass "in_error"
 				$("label[for=" + $(this).attr( "id" ) + "]").addClass "in_error"
@@ -26,7 +26,7 @@ $(document).ready ->
 
 	$("form").submit ->
 		errors = []
-		$("form input[type=text]").each ->
+		$("form *[data-validate]").each ->
 			$(this).trigger 'validate', [errors]
 		
 		if errors.length > 0

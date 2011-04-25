@@ -17,10 +17,10 @@
     }
   };
   $(document).ready(function() {
-    $("form input[type=text]").each(function() {
+    $("form *[data-validate]").each(function() {
       return $(this).bind('validate', function(event, errors) {
         var status;
-        status = $.data(document, 'text_field_not_blank')($(this), errors);
+        status = $.data(document, $(this).data("validate"))($(this), errors);
         if (!status.valid) {
           $(this).addClass("in_error");
           $("label[for=" + $(this).attr("id") + "]").addClass("in_error");
@@ -35,7 +35,7 @@
     return $("form").submit(function() {
       var errors, message, _i, _len;
       errors = [];
-      $("form input[type=text]").each(function() {
+      $("form *[data-validate]").each(function() {
         return $(this).trigger('validate', [errors]);
       });
       if (errors.length > 0) {
