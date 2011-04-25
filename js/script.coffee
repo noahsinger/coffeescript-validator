@@ -12,16 +12,22 @@ clear_errors = ->
 	if $("#form_errors").size( ) > 0
 		$("#form_errors ul").empty( )
 
-# ----------------------------------
+# ---------------------------------------
+# Change these to define valid conditions
+# needs to return {valid: valid, message: message}
+
+text_field_valid = (field, errors) ->
+	{valid: field.attr( "value" ) isnt "", message: "cannot be blank"}
+# ---------------------------------------
 
 $(document).ready ->
 	$("form input[type=text]").each ->
 		$(this).bind 'validate', (event, errors) ->
-			# alert "validating #{$(this).attr( "id" )} and errors: #{errors.length}"
-			if $(this).attr( "value" ) is ""
+			field = text_field_valid $(this), errors
+			unless field.valid
 				$(this).addClass "in_error"
 				$("label[for=" + $(this).attr( "id" ) + "]").addClass "in_error"
-				errors.push "#{$("label[for=" + $(this).attr( "id" ) + "]").html( )} cannot be blank"
+				errors.push "#{$("label[for=" + $(this).attr( "id" ) + "]").html( )} #{field.message}"
 				$(this).focus ->
 					$(this).removeClass "in_error"
 					$("label[for=" + $(this).attr( "id" ) + "]").removeClass "in_error"
@@ -30,6 +36,7 @@ $(document).ready ->
 		errors = []
 		$("form input[type=text]").each ->
 			$(this).trigger 'validate', [errors]
+		
 		if errors.length > 0
 			remove_errors_div( )
 			create_errors_div( )
