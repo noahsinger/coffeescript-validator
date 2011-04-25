@@ -1,5 +1,5 @@
 (function() {
-  var clear_errors, create_errors_div, remove_errors_div, show_error, text_field_valid;
+  var clear_errors, create_errors_div, remove_errors_div, show_error;
   create_errors_div = function() {
     if ($("#form_errors").size() < 1) {
       return $("<div id=\"form_errors\"><h1>The following errors kept the form from being submitted</h1><ul></ul></div>").prependTo("form");
@@ -16,21 +16,15 @@
       return $("#form_errors ul").empty();
     }
   };
-  text_field_valid = function(field, errors) {
-    return {
-      valid: field.attr("value") !== "",
-      message: "cannot be blank"
-    };
-  };
   $(document).ready(function() {
     $("form input[type=text]").each(function() {
       return $(this).bind('validate', function(event, errors) {
-        var field;
-        field = text_field_valid($(this), errors);
-        if (!field.valid) {
+        var status;
+        status = $.data(document, 'text_field_not_blank')($(this), errors);
+        if (!status.valid) {
           $(this).addClass("in_error");
           $("label[for=" + $(this).attr("id") + "]").addClass("in_error");
-          errors.push("" + ($("label[for=" + $(this).attr("id") + "]").html()) + " " + field.message);
+          errors.push("" + ($("label[for=" + $(this).attr("id") + "]").html()) + " " + status.message);
           return $(this).focus(function() {
             $(this).removeClass("in_error");
             return $("label[for=" + $(this).attr("id") + "]").removeClass("in_error");

@@ -43,8 +43,14 @@
 
     <div id="main" role="main">
 			<form action="http://ingenio.us.com/examples/echo" method="post" accept-charset="utf-8">
-				<p><label for="first_name">First Name</label><input type="text" name="first_name" value="" id="first_name"/></p>
-				<p><label for="last_name">Last Name</label><input type="text" name="last_name" value="" id="last_name"/></p>
+				<p>
+					<label for="first_name">First Name</label>
+					<input type="text" name="first_name" value="" id="first_name" data-validate="text_field_not_blank"/>
+				</p>
+				<p>
+					<label for="last_name">Last Name</label>
+					<input type="text" name="last_name" value="" id="last_name"/>
+				</p>
 
 				<p><input type="submit" value="Continue &rarr;"></p>
 			</form>
@@ -65,7 +71,9 @@
 
   <!-- scripts concatenated and minified via ant build script-->
   <!-- <script src="js/plugins.js"></script> -->
-  <script src="js/script.js"></script>
+	<script src="js/validators.js"></script>  
+	<script src="js/script.js"></script>
+	
   <!-- end scripts-->
 
 

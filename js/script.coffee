@@ -12,22 +12,14 @@ clear_errors = ->
 	if $("#form_errors").size( ) > 0
 		$("#form_errors ul").empty( )
 
-# ---------------------------------------
-# Change these to define valid conditions
-# needs to return {valid: valid, message: message}
-
-text_field_valid = (field, errors) ->
-	{valid: field.attr( "value" ) isnt "", message: "cannot be blank"}
-# ---------------------------------------
-
 $(document).ready ->
 	$("form input[type=text]").each ->
 		$(this).bind 'validate', (event, errors) ->
-			field = text_field_valid $(this), errors
-			unless field.valid
+			status = $.data( document, 'text_field_not_blank' )($(this), errors)
+			unless status.valid
 				$(this).addClass "in_error"
 				$("label[for=" + $(this).attr( "id" ) + "]").addClass "in_error"
-				errors.push "#{$("label[for=" + $(this).attr( "id" ) + "]").html( )} #{field.message}"
+				errors.push "#{$("label[for=" + $(this).attr( "id" ) + "]").html( )} #{status.message}"
 				$(this).focus ->
 					$(this).removeClass "in_error"
 					$("label[for=" + $(this).attr( "id" ) + "]").removeClass "in_error"
