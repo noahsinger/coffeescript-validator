@@ -15,7 +15,7 @@ clear_errors = ->
 $(document).ready ->
 	$("form *[data-validate]").each ->
 		$(this).bind 'validate', (event, errors) ->
-			status = $.data( document, $(this).data("validate") )($(this))
+			status = $.data( document, $(this).data("validate") )($(this)) #call the fields validation function as pass the field
 			unless status.valid
 				$(this).addClass "in_error"
 				$("label[for=" + $(this).attr( "id" ) + "]").addClass "in_error"
